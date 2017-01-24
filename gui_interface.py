@@ -13,7 +13,7 @@ class GUIInterface(QWidget):
 
     def initUI(self):
 
-        self.setGeometry(100, 100, 353, 200)
+        self.setGeometry(100, 100, 338, 200)
         self.setWindowTitle('PyPingWOL')
         self.setWindowIcon(QIcon('web.png'))
 
@@ -44,6 +44,7 @@ class GUIInterface(QWidget):
 
     def createTable(self):
         self.tableWidget = QTableWidget()
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setRowCount(2)
         self.tableWidget.verticalHeaderVisible = False
         self.tableWidget.setColumnCount(4)
