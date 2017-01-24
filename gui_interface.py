@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import (QWidget, QToolTip, QPushButton,
-QMainWindow, QAction, QTableWidget, QTableWidgetItem, QVBoxLayout, QCheckBox)
+QMainWindow, QAction, QTableWidget, QTableWidgetItem, QVBoxLayout,
+QHBoxLayout, QCheckBox)
 from PyQt5.QtGui import QIcon, QFont
+from PyQt5 import QtCore
 
 class GUIInterface(QWidget):
 
@@ -11,29 +13,32 @@ class GUIInterface(QWidget):
 
     def initUI(self):
 
-        self.setGeometry(100, 100, 440, 200)
+        self.setGeometry(100, 100, 353, 200)
         self.setWindowTitle('PyPingWOL')
         self.setWindowIcon(QIcon('web.png'))
 
         self.createTable()
 
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.tableWidget)
+        self.mainLayout = QVBoxLayout()
+        self.mainLayout.addWidget(self.tableWidget)
 
-        #QToolTip.setFont(QFont('SansSerif', 10))
+        QToolTip.setFont(QFont('SansSerif', 10))
 
-        #testBtn = QPushButton('Test', self)
-        #testBtn.setToolTip('This tests the PC\'s network connection(s)')
-        #testBtn.resize(testBtn.sizeHint())
-        #testBtn.move(50, 50)
+        self.testBtn = QPushButton('Test', self)
+        self.testBtn.setToolTip('This tests the PC\'s network connection(s)')
+        self.testBtn.resize(self.testBtn.sizeHint())
 
-        #wOLBtn = QPushButton('Send WoL', self)
-        #wOLBtn.setToolTip('Sends WoL packets to selected computers.')
-        #wOLBtn.resize(wOLBtn.sizeHint())
-        #wOLBtn.move(200, 50)
+        self.wOLBtn = QPushButton('Send WoL', self)
+        self.wOLBtn.setToolTip('Sends WoL packets to selected computers.')
+        self.wOLBtn.resize(self.wOLBtn.sizeHint())
 
+        self.hBLayout = QHBoxLayout()
+        self.hBLayout.addWidget(self.testBtn)
+        self.hBLayout.addWidget(self.wOLBtn)
 
-        self.setLayout(self.layout)
+        self.mainLayout.addLayout(self.hBLayout)
+
+        self.setLayout(self.mainLayout)
 
         self.show()
 
@@ -44,8 +49,10 @@ class GUIInterface(QWidget):
         self.tableWidget.setColumnCount(4)
         self.tableWidget.setHorizontalHeaderLabels([' ', 'Desc', 'PC Name',
         'Status'])
+
         checkBox = QCheckBox()
         checkBox.setChecked(True)
+
         self.tableWidget.setCellWidget(0,0, checkBox)
         self.tableWidget.setItem(0,1, QTableWidgetItem("Wet Side TV"))
         self.tableWidget.setItem(0,2, QTableWidgetItem("MAR-BPHHR22-D"))
@@ -53,5 +60,5 @@ class GUIInterface(QWidget):
         self.tableWidget.setItem(1,1, QTableWidgetItem("Bowles Breakroom TV"))
         self.tableWidget.setItem(1,2, QTableWidgetItem("MSM-2Q8X821"))
         self.tableWidget.setItem(1,3, QTableWidgetItem("Unreachable"))
-        self.tableWidget.setColumnWidth(0,20)
+        self.tableWidget.setColumnWidth(0,14)
         self.tableWidget.move(0,0)
