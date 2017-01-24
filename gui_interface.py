@@ -2,19 +2,20 @@ from PyQt5.QtWidgets import (QWidget, QToolTip, QPushButton,
 QMainWindow, QAction, QTableWidget, QTableWidgetItem, QVBoxLayout,
 QHBoxLayout, QCheckBox)
 from PyQt5.QtGui import QIcon, QFont
-from PyQt5 import QtCore
-import collections
+from PyQt5.QtCore import Qt
+from ping import Ping
 
 class GUIInterface(QWidget):
 
-    remoteMachines = [["Wet Side TV", "MAR-BPHHR22-D"],
+    remoteMachines1 = [["Wet Side TV", "MAR-BPHHR22-D"],
         ["Bowles Breakroom TV", "MSM-2Q8X821"], ["BP Breakroom TV",
         "MAR-ABCDE12-D"], ["Pack Side Breakroom TV", "MAR-ZYX5432-L"],
         ["Pi 3 Remote", "Things and Stuff"]]
+    remoteMachines = [["Wet Side TV", "MAR-BPHHR22-D"],
+        ["Bowles Breakroom TV", "MSM-2Q8X821"]]
 
     def __init__(self):
         super().__init__()
-
 
         self.initUI()
 
@@ -34,6 +35,7 @@ class GUIInterface(QWidget):
         self.testBtn = QPushButton('Test', self)
         self.testBtn.setToolTip('This tests the PC\'s network connection(s)')
         self.testBtn.resize(self.testBtn.sizeHint())
+        self.testBtn.clicked.connect(self.changeStatus)
 
         self.wOLBtn = QPushButton('Send WoL', self)
         self.wOLBtn.setToolTip('Sends WoL packets to selected computers.')
@@ -77,12 +79,11 @@ class GUIInterface(QWidget):
 
         self.tW.setColumnWidth(0,14)
 
-        #self.tableWidget.setCellWidget(0,0, checkBox)
-        #self.tableWidget.setItem(0,1, QTableWidgetItem("Wet Side TV"))
-        #self.tableWidget.setItem(0,2, QTableWidgetItem("MAR-BPHHR22-D"))
-        #self.tableWidget.setItem(0,3, QTableWidgetItem("Ok"))
-        #self.tableWidget.setItem(1,1, QTableWidgetItem("Bowles Breakroom TV"))
-        #self.tableWidget.setItem(1,2, QTableWidgetItem("MSM-2Q8X821"))
-        #self.tableWidget.setItem(1,3, QTableWidgetItem("Unreachable"))
-        #self.tableWidget.setColumnWidth(0,14)
-        #self.tableWidget.move(0,0)
+    def changeStatus(self):
+
+        resultList = Ping.pingList(self.remoteMachines)
+        row = 0
+        for result in resultList:
+
+            self.tW.item(row,3).setText(result)
+            row += 1
