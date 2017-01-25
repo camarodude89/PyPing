@@ -23,14 +23,3 @@ class Ping:
                 break
 
         return pingStatus
-
-    @staticmethod
-    def pingList(remoteMachines):
-
-        resultList = []
-
-        for machine in remoteMachines:
-
-            resultList.append(Ping.ping(machine[1]))
-
-        return resultList

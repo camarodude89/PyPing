@@ -7,11 +7,11 @@ from ping import Ping
 
 class GUIInterface(QWidget):
 
-    remoteMachines1 = [["Wet Side TV", "MAR-BPHHR22-D"],
+    remoteMachines = [["Wet Side TV", "MAR-BPHHR22-D"],
         ["Bowles Breakroom TV", "MSM-2Q8X821"], ["BP Breakroom TV",
         "MAR-ABCDE12-D"], ["Pack Side Breakroom TV", "MAR-ZYX5432-L"],
         ["Pi 3 Remote", "Things and Stuff"]]
-    remoteMachines = [["Wet Side TV", "MAR-BPHHR22-D"],
+    remoteMachines1 = [["Wet Side TV", "MAR-BPHHR22-D"],
         ["Bowles Breakroom TV", "MSM-2Q8X821"]]
 
     def __init__(self):
@@ -35,7 +35,7 @@ class GUIInterface(QWidget):
         self.testBtn = QPushButton('Test', self)
         self.testBtn.setToolTip('This tests the PC\'s network connection(s)')
         self.testBtn.resize(self.testBtn.sizeHint())
-        self.testBtn.clicked.connect(self.changeStatus)
+        self.testBtn.clicked.connect(self.checkStatus)
 
         self.wOLBtn = QPushButton('Send WoL', self)
         self.wOLBtn.setToolTip('Sends WoL packets to selected computers.')
@@ -79,11 +79,11 @@ class GUIInterface(QWidget):
 
         self.tW.setColumnWidth(0,14)
 
-    def changeStatus(self):
+    def checkStatus(self):
 
-        resultList = Ping.pingList(self.remoteMachines)
-        row = 0
-        for result in resultList:
+        for row, box in enumerate(self.checkBoxList):
 
-            self.tW.item(row,3).setText(result)
-            row += 1
+            if box.isChecked():
+
+                result = Ping.ping(self.remoteMachines[row][1])
+                self.tW.item(row,3).setText(result)
