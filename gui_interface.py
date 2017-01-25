@@ -8,10 +8,6 @@ from ping import Ping
 class GUIInterface(QWidget):
 
     remoteMachines = [["Wet Side TV", "MAR-BPHHR22-D"],
-        ["Bowles Breakroom TV", "MSM-2Q8X821"], ["BP Breakroom TV",
-        "MAR-ABCDE12-D"], ["Pack Side Breakroom TV", "MAR-ZYX5432-L"],
-        ["Pi 3 Remote", "Things and Stuff"]]
-    remoteMachines1 = [["Wet Side TV", "MAR-BPHHR22-D"],
         ["Bowles Breakroom TV", "MSM-2Q8X821"]]
 
     def __init__(self):
@@ -22,7 +18,7 @@ class GUIInterface(QWidget):
     def initUI(self):
 
         self.setGeometry(100, 100, 338, 200)
-        self.setWindowTitle('PyPingWOL')
+        self.setWindowTitle('PyPing')
         self.setWindowIcon(QIcon('web.png'))
 
         self.createTable()
@@ -37,13 +33,8 @@ class GUIInterface(QWidget):
         self.testBtn.resize(self.testBtn.sizeHint())
         self.testBtn.clicked.connect(self.checkStatus)
 
-        self.wOLBtn = QPushButton('Send WoL', self)
-        self.wOLBtn.setToolTip('Sends WoL packets to selected computers.')
-        self.wOLBtn.resize(self.wOLBtn.sizeHint())
-
         self.hBLayout = QHBoxLayout()
         self.hBLayout.addWidget(self.testBtn)
-        self.hBLayout.addWidget(self.wOLBtn)
 
         self.mainLayout.addLayout(self.hBLayout)
 
