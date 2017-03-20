@@ -8,7 +8,7 @@ from ping import Ping
 class GUIInterface(QWidget):
 
     remoteMachines = [["Wet Side TV", "MAR-BPHHR22-D"],
-        ["Bowles Breakroom TV", "MSM-2Q8X821"]]
+        ["Bowles Breakroom TV", "MAR-BOWLESTV"]]
 
     def __init__(self):
         super().__init__()
